@@ -1,6 +1,7 @@
 package com.example.viewpagertablayoutpro
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +25,15 @@ class CustomRecycleAdapter(val dataList: MutableList<DataList>): RecyclerView.Ad
         itemViewBinding.root.setOnClickListener {
             Toast.makeText(itemViewBinding.root.context, "${dataList.get(position).toString()}", Toast.LENGTH_SHORT).show()
         }
+        itemViewBinding.root.setOnLongClickListener(object : View.OnLongClickListener{
+            override fun onLongClick(v: View?): Boolean {
+                val position = holder.adapterPosition
+                val deleteData = dataList.removeAt(position)
+                Toast.makeText(itemViewBinding.root.context, "${deleteData.tvName} 삭제완료", Toast.LENGTH_SHORT).show()
+                notifyDataSetChanged()
+                return true
+            }
+        })
     }
 
     class CustomViewHolder(val itemViewBinding: ItemViewBinding): RecyclerView.ViewHolder(itemViewBinding.root)
